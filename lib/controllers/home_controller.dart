@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:get/get.dart';
 
 import '../models/job_response.dart';
 import '../services/api_service.dart';
 import '../services/auth_service.dart';
-import '../widgets/job_card.dart';
+import '../widgets/event_card.dart';
 
 class HomeController extends GetxController {
   final AuthService authService = Get.find<AuthService>();
@@ -20,8 +21,16 @@ class HomeController extends GetxController {
   final RxBool isJobTagsLoading = false.obs;
 
   final RxList<String> jobTagsList = RxList<String>([]);
-  final RxList<JobPosting> recommendedJobPosts = RxList<JobPosting>([]);
+  final RxList<JobPosting> recommendedJobPosts = RxList<JobPosting>([
+    new JobPosting(id: "1", title: "Title 1", location: "Location 1", description: "Description 1", image: "img1", salaryValue: "5000", salaryFrequency: "1mo", tags: ["Hi", "Bye"], isSaved: true)
+  ]);
   final RxList<JobPosting> mostPopularJobPosts = RxList<JobPosting>([]);
+
+  final AdvancedDrawerController drawerController = AdvancedDrawerController();
+
+  void handleDrawerToggle() {
+    drawerController.toggleDrawer();
+  }
 
   Future<void> fetchJobTags() async {
     isJobTagsLoading.value = true;
@@ -218,7 +227,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchRecentJobPostings();
+    // fetchRecentJobPostings();
     fetchMostPopularJobPosts();
     // fetchJobTags();
     // fetchRecommendedJobPosts();

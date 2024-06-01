@@ -5,7 +5,7 @@ import 'package:flutter_app/theme/colors.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/form_text_field.dart';
-import '../../widgets/job_card.dart';
+import '../../widgets/event_card.dart';
 
 class EmployerHomeView extends StatelessWidget {
   const EmployerHomeView({Key? key});
@@ -172,7 +172,7 @@ class EmployerHomeView extends StatelessWidget {
                             left: index == 0 ? 24.0 : 0,
                             right: index == 9 ? 24.0 : 16.0,
                           ),
-                          child: JobCard(
+                          child: EventCard(
                             showDescription: false,
                             shadowColor:
                                 WorkWiseColors.greyColor.withOpacity(0.5),
@@ -217,7 +217,7 @@ class EmployerHomeView extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
                           children: [
-                            JobCard(
+                            EventCard(
                               shadowColor:
                                   WorkWiseColors.greyColor.withOpacity(0.5),
                               onCardTap: () => {

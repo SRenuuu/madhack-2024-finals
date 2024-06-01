@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../models/employer_job_response.dart';
 import '../../services/api_service.dart';
 import '../../services/auth_service.dart';
-import '../../widgets/job_card.dart';
+import '../../widgets/event_card.dart';
 
 class EmployerHomeController extends GetxController {
   final AuthService authService = Get.find<AuthService>();
