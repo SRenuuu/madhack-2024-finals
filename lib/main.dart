@@ -9,7 +9,7 @@ import 'package:flutter_app/views/employer/home_view.dart';
 import 'package:flutter_app/views/employer/job_listing_view.dart';
 import 'package:flutter_app/views/home/home_view.dart';
 import 'package:flutter_app/views/home/search_filters_view.dart';
-import 'package:flutter_app/views/job_listing_view.dart';
+import 'package:flutter_app/views/event_listing_view.dart';
 import 'package:flutter_app/views/job_posting/job_post_form_view.dart';
 import 'package:flutter_app/views/profile/about_me_view.dart';
 import 'package:flutter_app/views/profile/all_work_experience.dart';
@@ -45,14 +45,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         title: 'WorkWise - Job Search',
         theme: AppTheme.getTheme(),
-        home: const SplashView(),
+        home: UserProfilePage(),
         debugShowCheckedModeBanner: false,
         routes: {
           '/root': (context) => const RootView(),
           '/login': (context) => const LoginView(),
           '/sign_up': (context) => const SignUpView(),
           '/home': (context) => const HomeView(),
-          '/job': (context) => JobListingPage(),
+          '/job': (context) => EventListingView(),
           '/profile': (context) => const UserProfilePage(),
           '/search-filters': (context) => const SearchFiltersView(),
         '/user-profile': (context) => const UserPersonalDetailPage(),

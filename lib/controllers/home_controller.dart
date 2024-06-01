@@ -194,25 +194,40 @@ class HomeController extends GetxController {
 
   final Rx<RangeValues> salaryRange = const RangeValues(50000, 250000).obs;
 
-  final RxList<String> allTags = [
-    'On-site',
-    'Remote',
-    'Hybrid',
-    'Full Time',
-    'Part Time',
-    'Intern',
-    'Senior',
-    'New',
-    'Urgent'
+  final RxList<String> skills = [
+    'Communication',
+    'Time Management',
+    'Adaptability',
+    'Problem Solving',
+    'Teamwork',
+    'Compassion',
+    'Friendliness',
+    'Enthusiasm',
   ].obs;
-  final RxList<String> selectedTags = <String>[].obs;
+  final RxList<String> selectedSkills = <String>[].obs;
 
-  void addTag(String tag) {
-    selectedTags.add(tag);
+  final List<String> timeCommitments = [
+    '6-12 Months',
+    'Less than 3 months',
+    '3-6 months',
+    'More then 12 months'
+  ];
+  final RxList<String> selectedTimeCommitments = <String>[].obs;
+
+  void addSkillTag(String tag) {
+    selectedSkills.add(tag);
   }
 
-  void removeTag(String tag) {
-    selectedTags.remove(tag);
+  void removeSkillTag(String tag) {
+    selectedSkills.remove(tag);
+  }
+
+  void addTimeCommitmentTag(String tag) {
+    selectedTimeCommitments.add(tag);
+  }
+
+  void removeTimeCommitmentTag(String tag) {
+    selectedTimeCommitments.remove(tag);
   }
 
   @override
@@ -224,4 +239,11 @@ class HomeController extends GetxController {
     // fetchRecommendedJobPosts();
     // fetchMostPopularJobPosts();
   }
+}
+
+class ImageCategory {
+  final IconData icon;
+  final String categoryName;
+
+  const ImageCategory({required this.icon, required this.categoryName});
 }
