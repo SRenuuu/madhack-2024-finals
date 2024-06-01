@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_app/theme/colors.dart';
+
+class CustomBtn extends StatelessWidget {
+  final Function? callback;
+  final Widget? title;
+  CustomBtn({Key? key, this.title, this.callback}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: SizedBox(
+        width: double.infinity,
+        child: Container(
+          color: WorkWiseColors.primaryColor,
+          child: TextButton(
+            onPressed: () => callback!(),
+            child: title!,
+          ),
+        ),
+      ),
+    );
+  }
+}
