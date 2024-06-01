@@ -59,11 +59,10 @@ class HomeView extends StatelessWidget {
                 buildSearchField(context),
                 const SizedBox(height: 24.0),
                 buildFeaturedEvents(),
-                buildJobTagsList(context),
                 const SizedBox(height: 20.0),
-                buildAvatarList(),
+                buildOrgsList(),
                 const SizedBox(height: 20.0),
-                buildRecommendedJobs(context),
+                buildYourEvents(context),
                 const SizedBox(height: 40.0),
               ],
             ),
@@ -73,41 +72,41 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget buildProfileIcons() {
-    return Row(
-      children: [
-        IconButton(
-          onPressed: () => Get.toNamed("/saved-jobs"),
-          icon: const Icon(
-            Icons.bookmarks_rounded,
-            size: 24,
-            color: WorkWiseColors.tertiaryColor,
-          ),
-        ),
-        const SizedBox(width: 12.0),
-        buildProfileIconButton(),
-      ],
-    );
-  }
-
-  Widget buildProfileIconButton() {
-    return Container(
-      width: 42.0,
-      height: 42.0,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: WorkWiseColors.lightGreyColor,
-      ),
-      child: IconButton(
-        onPressed: () => Get.toNamed("/profile"),
-        icon: const Icon(
-          Icons.person,
-          size: 24,
-          color: WorkWiseColors.primaryColor,
-        ),
-      ),
-    );
-  }
+  // Widget buildProfileIcons() {
+  //   return Row(
+  //     children: [
+  //       IconButton(
+  //         onPressed: () => Get.toNamed("/saved-jobs"),
+  //         icon: const Icon(
+  //           Icons.bookmarks_rounded,
+  //           size: 24,
+  //           color: WorkWiseColors.tertiaryColor,
+  //         ),
+  //       ),
+  //       const SizedBox(width: 12.0),
+  //       buildProfileIconButton(),
+  //     ],
+  //   );
+  // }
+  //
+  // Widget buildProfileIconButton() {
+  //   return Container(
+  //     width: 42.0,
+  //     height: 42.0,
+  //     decoration: const BoxDecoration(
+  //       shape: BoxShape.circle,
+  //       color: WorkWiseColors.lightGreyColor,
+  //     ),
+  //     child: IconButton(
+  //       onPressed: () => Get.toNamed("/profile"),
+  //       icon: const Icon(
+  //         Icons.person,
+  //         size: 24,
+  //         color: WorkWiseColors.primaryColor,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget buildSearchField(context) {
     HomeController controller = Get.put(HomeController());
@@ -176,12 +175,12 @@ class HomeView extends StatelessWidget {
             ],
           ),
         ),
-        Obx(() => controller.isMostPopularJobPostsLoading.value
+        Obx(() => controller.isOrgsLoading.value
             ? _buildLoadingIndicator()
-            : controller.mostPopularJobPosts.isEmpty
+            : controller.featuredEvents.isEmpty
                 ? const Center(
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                      padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
                       child: Text(
                         "No featured events yet",
                         style: TextStyle(
@@ -194,7 +193,7 @@ class HomeView extends StatelessWidget {
                     height: 265.0,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: controller.mostPopularJobPosts.length,
+                      itemCount: controller.featuredEvents.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           width: MediaQuery.of(context).size.width * 0.8,
@@ -209,7 +208,7 @@ class HomeView extends StatelessWidget {
                             shadowColor:
                                 WorkWiseColors.greyColor.withOpacity(0.5),
                             onCardTap: () => {print("Not implemented")},
-                            jobPosting: controller.mostPopularJobPosts[index],
+                            eventPosting: controller.featuredEvents[index],
                           ),
                         );
                       },
@@ -219,58 +218,15 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget buildJobTagsList(context) {
-    HomeController controller = Get.put(HomeController());
-    return Row(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Obx(
-              () => Container(
-                // Specify a maximum width for the Row widget
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  children: [
-                    const SizedBox(width: 16),
-                    ...controller.jobTagsList.map(
-                      (job) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 0.0),
-                        child: InputChip(
-                          onPressed: () => print("Job: $job"),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 8.0),
-                          label: Text(job),
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(color: Colors.transparent),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          backgroundColor:
-                              WorkWiseColors.greyColor.withOpacity(0.5),
-                          labelStyle: const TextStyle(fontSize: 15.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildAvatarList() {
+  Widget buildOrgsList() {
     // Replace 'List<String>' with your actual data list of avatar URLs and names
     final List<String> avatars = [
-      'https://example.com/avatar1.jpg',
-      'https://example.com/avatar2.jpg',
-      'https://example.com/avatar3.jpg',
-      'https://example.com/avatar3.jpg',
-      'https://example.com/avatar3.jpg',
-      'https://example.com/avatar3.jpg',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
       // Add more avatar URLs as needed
     ];
     final List<String> names = [
@@ -348,7 +304,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget buildRecommendedJobs(context) {
+  Widget buildYourEvents(context) {
     HomeController controller = Get.put(HomeController());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -360,9 +316,9 @@ class HomeView extends StatelessWidget {
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 16.0),
-          Obx(() => controller.isRecommendedJobPostsLoading.value
+          Obx(() => controller.isFeaturedEventsLoading.value
               ? _buildLoadingIndicator()
-              : controller.recommendedJobPosts.isEmpty
+              : controller.featuredEvents.isEmpty
                   ? const Center(
                       child: Text(
                         "No recommended jobs found",
@@ -374,7 +330,7 @@ class HomeView extends StatelessWidget {
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.recommendedJobPosts.length,
+                      itemCount: controller.featuredEvents.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -383,8 +339,8 @@ class HomeView extends StatelessWidget {
                                 WorkWiseColors.greyColor.withOpacity(0.5),
                             onCardTap: () => Get.toNamed("/job",
                                 arguments: CustomArg(
-                                    controller.recommendedJobPosts[index].id)),
-                            jobPosting: controller.recommendedJobPosts[index],
+                                    controller.featuredEvents[index].id)),
+                            eventPosting: controller.featuredEvents[index],
                           ),
                         );
                       },
@@ -423,6 +379,7 @@ class HomeView extends StatelessWidget {
     );
   }
 }
+
 
 class CustomArg {
   final String jobId;

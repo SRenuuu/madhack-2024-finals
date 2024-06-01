@@ -2,35 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/theme/colors.dart';
 import 'package:flutter_app/widgets/job_tag.dart';
 
+import '../models/event_posting_model.dart';
 import 'flag.dart';
 
-class JobPosting {
-  final String id;
-  final String title;
-  final String location;
-  final String? description;
-  final String? image;
-  final String? salaryValue;
-  final String? salaryFrequency;
-  final List<String> tags;
-  final bool? isSaved;
-
-  JobPosting({
-    required this.id,
-    required this.title,
-    required this.location,
-    required this.description,
-    required this.image,
-    required this.salaryValue,
-    required this.salaryFrequency,
-    required this.tags,
-    required this.isSaved,
-  });
-}
 
 class EventCard extends StatelessWidget {
   final VoidCallback onCardTap;
-  final JobPosting jobPosting;
+  final EventPosting eventPosting;
   final bool showSaveButton;
   final bool showDescription;
   final bool showTags;
@@ -48,7 +26,7 @@ class EventCard extends StatelessWidget {
   const EventCard({
     super.key,
     required this.onCardTap,
-    required this.jobPosting,
+    required this.eventPosting,
     this.showSaveButton = true,
     this.showDescription = true,
     this.showShadow = true,
@@ -117,7 +95,7 @@ class EventCard extends StatelessWidget {
                         color: WorkWiseColors.secondaryColor,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      child: jobPosting.image != null
+                      child: eventPosting.image != null
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.network(
@@ -138,7 +116,7 @@ class EventCard extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                jobPosting.title,
+                                eventPosting.name,
                                 style: const TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   color: WorkWiseColors.primaryColor,
@@ -148,7 +126,7 @@ class EventCard extends StatelessWidget {
                               ),
                               const SizedBox(height: 2.0),
                               Text(
-                                jobPosting.location,
+                                eventPosting.location,
                                 style: const TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   color: WorkWiseColors.darkGreyColor,
