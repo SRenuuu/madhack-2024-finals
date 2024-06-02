@@ -49,7 +49,8 @@ class FirebaseAuthService extends GetxService {
     return null;
   }
 
-  Future<UserData?> register(String email, String password, String customRole) async {
+  Future<UserData?> register(
+      String email, String password, String customRole) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -78,6 +79,8 @@ class FirebaseAuthService extends GetxService {
         );
 
         return userData;
+      } else {
+        return null;
       }
     } catch (e) {
       print(e.toString());

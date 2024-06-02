@@ -57,10 +57,16 @@ class SignUpController extends GetxController {
       if (userData != null) {
         return true;
       } else {
-        nameController.text = "";
-        emailController.text = "";
-        passwordController.text = "";
-        confirmPasswordController.text = "";
+        Get.snackbar(
+          'Error',
+          'Failed to register',
+          backgroundColor: Colors.orange.shade800.withOpacity(0.9),
+          colorText: Colors.white,
+        );
+        // nameController.text = "";
+        // emailController.text = "";
+        // passwordController.text = "";
+        // confirmPasswordController.text = "";
         return false;
       }
     } catch (e) {

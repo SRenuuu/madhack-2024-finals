@@ -130,6 +130,14 @@ class LoginView extends StatelessWidget {
                                           Colors.red.shade700.withOpacity(0.9),
                                     );
                                   }
+                                } else {
+                                  Get.snackbar(
+                                    "Error",
+                                    "Failed to log in",
+                                    colorText: Colors.white,
+                                    backgroundColor:
+                                        Colors.red.shade700.withOpacity(0.9),
+                                  );
                                 }
                               },
                         child: !controller.isLoginLoading.value
