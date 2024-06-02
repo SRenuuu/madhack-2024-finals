@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/signup_controller.dart';
+import 'package:flutter_app/controllers/employer/employer_signup_controller.dart';
 import 'package:get/get.dart';
 
 import '../../theme/colors.dart';
 
-class SignUpView extends StatelessWidget {
-  const SignUpView({super.key});
+class EmployerSignUpView extends StatelessWidget {
+  const EmployerSignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    SignUpController controller = Get.put(SignUpController());
+    EmployerSignUpController controller = Get.put(EmployerSignUpController());
 
     return GestureDetector(
       onTap: () {
@@ -29,24 +29,25 @@ class SignUpView extends StatelessWidget {
                     // Padding(
                     //   padding: const EdgeInsets.all(4.0),
                     //   child: Image.asset(
-                    //     'assets/images/volunify-logo.png',
+                    //     'assets/images/workwise-logo.png',
                     //     width: 170.0,
                     //   ),
                     // ),
                     const Text("Create an Account",
                         style: TextStyle(
-                            fontSize: 24.0, fontWeight: FontWeight.w400)),
-                    const Text("Please create your account as a Volunteer",
+                            fontSize: 24.0, fontWeight: FontWeight.w500)),
+                    const SizedBox(height: 8.0), // Spacer
+                    const Text("For Organizations",
                         style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w400,
-                            color: WorkWiseColors.darkGreyColor)),
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey)),
                     const SizedBox(height: 30.0),
                     // Name Field
                     TextField(
                       controller: controller.nameController,
                       decoration: const InputDecoration(
-                        labelText: 'Volunteer Name',
+                        labelText: 'Name',
                       ),
                     ),
                     const SizedBox(height: 24.0),
@@ -82,9 +83,9 @@ class SignUpView extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             print('Forgot Password button pressed');
-                            Get.toNamed("/employer_sign_up");
+                            Get.toNamed("/sign_up");
                           },
-                          child: const Text('Are you an organization?',
+                          child: const Text('Are you a volunteer?',
                               style: TextStyle(
                                   color: WorkWiseColors.primaryColor)),
                         ),
@@ -109,7 +110,7 @@ class SignUpView extends StatelessWidget {
                                         ),
                                         shouldIconPulse: true,
                                         "Success",
-                                        "Your Volunify registration was successful! Please log in to continue.",
+                                        "Welcome to WorkWise",
                                         colorText: Colors.white,
                                         backgroundColor: Colors.green.shade700
                                             .withOpacity(0.9),

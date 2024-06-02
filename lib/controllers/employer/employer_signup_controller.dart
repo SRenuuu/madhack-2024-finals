@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../models/user_data_model.dart';
-import '../services/api_service.dart';
-import '../services/firebase_auth_service.dart';
+import '../../models/user_data_model.dart';
+import '../../services/api_service.dart';
+import '../../services/firebase_auth_service.dart';
 
-class SignUpController extends GetxController {
+class EmployerSignUpController extends GetxController {
   final ApiService apiService = Get.find<ApiService>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -54,7 +54,9 @@ class SignUpController extends GetxController {
     try {
       isRegisterLoading.value = true;
       UserData? userData = await Get.find<FirebaseAuthService>()
-          .register(emailController.text, passwordController.text, 'volunteer');
+          .register(emailController.text, passwordController.text, 'organizer');
+
+      print(userData);
 
       if (userData != null) {
         return true;

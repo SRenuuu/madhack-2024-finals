@@ -62,6 +62,24 @@ class OrganizerHomeView extends StatelessWidget {
                 // const SizedBox(height: 24.0),
                 buildFeaturedEvents(),
                 const SizedBox(height: 20.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Get.toNamed("/create-event");
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: WorkWiseColors.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text("Create New Event",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
                 buildOrgsList(),
                 const SizedBox(height: 20.0),
                 buildYourEvents(context),
@@ -378,6 +396,27 @@ class OrganizerHomeView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget actionButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () async {},
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: WorkWiseColors.primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text("Next",
+                style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ),
+      ],
     );
   }
 }
