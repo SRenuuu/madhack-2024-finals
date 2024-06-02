@@ -12,6 +12,9 @@ import 'package:flutter_app/views/employer/job_listing_view.dart';
 import 'package:flutter_app/views/home/home_view.dart';
 import 'package:flutter_app/views/job_listing_view.dart';
 import 'package:flutter_app/views/job_posting/job_post_form_view.dart';
+import 'package:flutter_app/views/organizations/create_event.dart';
+import 'package:flutter_app/views/organizations/create_event_step_three.dart';
+import 'package:flutter_app/views/organizations/create_event_step_two.dart';
 import 'package:flutter_app/views/profile/about_me_view.dart';
 import 'package:flutter_app/views/profile/all_work_experience.dart';
 import 'package:flutter_app/views/profile/education_view.dart';
@@ -21,8 +24,6 @@ import 'package:flutter_app/views/profile/skills_view.dart';
 import 'package:flutter_app/views/profile/work_experience_view.dart';
 import 'package:flutter_app/views/resume_upload_view.dart';
 import 'package:flutter_app/views/root_view.dart';
-import 'package:flutter_app/views/saved_jobs_view.dart';
-import 'package:flutter_app/views/splash_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
@@ -48,11 +49,10 @@ class MyApp extends StatelessWidget {
 
     Get.put(FirestoreService());
 
-
     return GetMaterialApp(
       title: 'WorkWise - Job Search',
       theme: AppTheme.getTheme(),
-      home: HomeView(),
+      home: const CreateEventStepOnePage(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/root': (context) => const RootView(),
@@ -79,6 +79,11 @@ class MyApp extends StatelessWidget {
         // '/employer-home': (context) => const EmployerHomeView(),
         '/create-job': (context) => const JobPostFormView(),
         '/employer-job': (context) => EmployerJobListingPage(),
+
+        // Organizations Routes
+        '/create-event': (context) => const CreateEventStepOnePage(),
+        '/create-event-step-2': (context) => const CreateEventStepTwoPage(),
+        '/create-event-step-3': (context) => const CreateEventStepThreePage(),
       },
     );
   }

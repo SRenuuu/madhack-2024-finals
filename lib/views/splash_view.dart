@@ -11,8 +11,9 @@ class SplashView extends StatelessWidget {
     AuthService authService = Get.find<AuthService>();
 
     Future.delayed(const Duration(seconds: 1), () {
-      Get.offAndToNamed(
-          (authService.isAuthenticated.value) ? '/home' : '/root');
+      Get.offAndToNamed((authService.isAuthenticated.value)
+          ? '/create-event'
+          : '/create-event');
     });
 
     return Scaffold(
