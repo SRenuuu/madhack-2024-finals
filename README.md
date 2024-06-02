@@ -1,6 +1,6 @@
 # flutter_app
 
-WorkWise - Cutting-edge Job Searching App
+Volunify - Cutting-edge Job Searching App
 
 ## Getting Started
 

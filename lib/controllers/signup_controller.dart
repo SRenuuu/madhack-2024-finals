@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../models/signup_request.dart';
 import '../models/user_data_model.dart';
 import '../services/api_service.dart';
 import '../util/constants.dart';

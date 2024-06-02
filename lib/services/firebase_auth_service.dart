@@ -111,7 +111,9 @@ class FirebaseAuthService extends GetxService {
 
   Future<String?> getName() async {
     final currentUser = _auth.currentUser;
+    print(currentUser);
     if (currentUser != null) {
+      print(currentUser.displayName);
       return currentUser.displayName;
     }
     return null;

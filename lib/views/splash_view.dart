@@ -19,7 +19,7 @@ class SplashView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(64.0),
         child: Center(
-          child: Image.asset('assets/images/workwise-logo.png'),
+          child: Image.asset('assets/images/volunify-logo.png'),
         ),
       ),
     );

@@ -1,16 +1,11 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/firebase_auth_service.dart';
 import 'package:get/get.dart';
 
-import '../models/login_request.dart';
-import '../models/login_response.dart';
 import '../models/user_data_model.dart';
 import '../services/api_service.dart';
-import '../services/auth_service.dart';
-import '../util/constants.dart';
 
 class LoginController extends GetxController {
   final ApiService apiService = Get.find<ApiService>();

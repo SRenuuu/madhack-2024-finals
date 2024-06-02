@@ -71,7 +71,7 @@ class Manageapplicationhomepage extends StatelessWidget {
   //   return Row(
   //     children: [
   //       IconButton(
-  //         onPressed: () => Get.toNamed("/saved-jobs"),
+  //         onPressed: () => Get.toNamed("/events"),
   //         icon: const Icon(
   //           Icons.bookmarks_rounded,
   //           size: 24,

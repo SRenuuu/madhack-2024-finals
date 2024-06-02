@@ -31,7 +31,7 @@ class LoginView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Image.asset(
-                        'assets/images/workwise-logo.png',
+                        'assets/images/volunify-logo.png',
                         width: 170.0,
                       ),
                     ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/job_listing_controller.dart';
 import 'package:flutter_app/theme/colors.dart';
 import 'package:get/get.dart';
 

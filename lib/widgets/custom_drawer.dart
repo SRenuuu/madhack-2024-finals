@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -12,6 +13,7 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     // get auth service
     ProfileController profileController = Get.put(ProfileController());
+    HomeController controller = Get.put(HomeController());
     return Drawer(
       child: Container(
         child: Column(
@@ -53,7 +55,8 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Home'),
               onTap: () {
                 // Handle home navigation
-                Get.toNamed('/create-event');
+                Get.offAllNamed('/home');
+                controller.handleDrawerToggle();
               },
             ),
             ListTile(
@@ -64,7 +67,8 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Applications'),
               onTap: () {
                 // Handle applications navigation
-                Get.toNamed('/manage-application');
+                Get.offAllNamed('/manage-application');
+                controller.handleDrawerToggle();
               },
             ),
             ListTile(
@@ -75,7 +79,8 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Events'),
               onTap: () {
                 // Handle programs navigation
-                Get.toNamed('/saved-jobs');
+                Get.offAllNamed('/events');
+                controller.handleDrawerToggle();
               },
             ),
             ListTile(
@@ -86,7 +91,8 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Volunteers'),
               onTap: () {
                 // Handle volunteers navigation
-                Get.toNamed('/create-event');
+                Get.offAllNamed('/create-event');
+                controller.handleDrawerToggle();
               },
             ),
             ListTile(
@@ -96,8 +102,8 @@ class CustomDrawer extends StatelessWidget {
               ),
               title: const Text('Notifications'),
               onTap: () {
-                // Handle notifications navigation
-                Get.toNamed('/create-event');
+                Get.offAllNamed('/create-event');
+                controller.handleDrawerToggle();
               },
             ),
             ListTile(
@@ -108,7 +114,8 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Chats'),
               onTap: () {
                 // Handle chats navigation
-                Get.toNamed('/create-event');
+                Get.offAllNamed('/create-event');
+                controller.handleDrawerToggle();
               },
             ),
           ],

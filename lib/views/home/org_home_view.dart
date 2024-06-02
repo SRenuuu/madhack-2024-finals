@@ -111,7 +111,7 @@ class OrganizerHomeView extends StatelessWidget {
   //   return Row(
   //     children: [
   //       IconButton(
-  //         onPressed: () => Get.toNamed("/saved-jobs"),
+  //         onPressed: () => Get.toNamed("/events"),
   //         icon: const Icon(
   //           Icons.bookmarks_rounded,
   //           size: 24,
@@ -339,7 +339,7 @@ class OrganizerHomeView extends StatelessWidget {
                           child: EventCard(
                             shadowColor:
                                 WorkWiseColors.greyColor.withOpacity(0.5),
-                            onCardTap: () => Get.toNamed("/job",
+                            onCardTap: () => Get.toNamed("/event",
                                 arguments: CustomArg(
                                     controller.featuredEvents[index].id)),
                             eventPosting: controller.featuredEvents[index],

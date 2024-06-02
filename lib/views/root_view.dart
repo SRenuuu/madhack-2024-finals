@@ -18,11 +18,11 @@ class RootView extends StatelessWidget {
               children: [
                 // Logo
                 Image.asset(
-                  'assets/images/workwise-logo.png',
+                  'assets/images/volunify-logo.png',
                   width: 240.0,
                 ),
                 const SizedBox(height: 8.0), // Spacer
-                const Text("Welcome to WorkWise",
+                const Text("Welcome to Volunify",
                     style:
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 4.0), // Spacer
