@@ -1,4 +1,5 @@
 // controllers/home_controller.dart
+import 'package:flutter_app/models/organization_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -12,8 +13,11 @@ class HomeController extends GetxController {
   final TextEditingController searchController = TextEditingController();
 
   final RxBool isFeaturedEventsLoading = false.obs;
+  final RxBool isYourEventsLoading = false.obs;
   final RxBool isOrgsLoading = false.obs;
   final RxList<dynamic> featuredEvents = RxList<dynamic>([]);
+  final RxList<dynamic> yourEvents = RxList<dynamic>([]);
+  final RxList<dynamic> orgs = RxList<dynamic>([]);
 
   final AdvancedDrawerController drawerController = AdvancedDrawerController();
 
@@ -21,6 +25,8 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     fetchFeaturedEvents();
+    fetchOrgs();
+    fetchYourEvents();
   }
 
   Future<void> fetchFeaturedEvents() async {
@@ -30,7 +36,9 @@ class HomeController extends GetxController {
           await firestoreService.getDocuments<EventPosting>(
         EventPosting.fromDocument,
         'events',
-        null,
+        {
+          'is_featured': true,
+        },
         (query) => query.orderBy('start_date',
             descending: true), // Specify ordering if needed
       );
@@ -41,6 +49,44 @@ class HomeController extends GetxController {
       print(e);
     } finally {
       isFeaturedEventsLoading.value = false;
+    }
+  }
+
+  Future<void> fetchYourEvents() async {
+    isYourEventsLoading.value = true;
+    try {
+      final yourEventsData = await firestoreService.getDocuments<EventPosting>(
+        EventPosting.fromDocument,
+        'events',
+        null,
+        (query) => query.orderBy('start_date', descending: true),
+      );
+      yourEvents.clear();
+      yourEvents.addAll(yourEventsData);
+      print(yourEvents);
+    } catch (e) {
+      print(e);
+    } finally {
+      isYourEventsLoading.value = false;
+    }
+  }
+
+  Future<void> fetchOrgs() async {
+    isOrgsLoading.value = true;
+    try {
+      final orgsData = await firestoreService.getDocuments<Organization>(
+        Organization.fromDocument,
+        'organizations',
+        null,
+        null,
+      );
+      orgs.clear();
+      orgs.addAll(orgsData);
+      print(orgs);
+    } catch (e) {
+      print(e);
+    } finally {
+      isOrgsLoading.value = false;
     }
   }
 

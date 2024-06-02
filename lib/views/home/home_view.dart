@@ -28,7 +28,8 @@ class HomeView extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Center the row content
+              mainAxisAlignment: MainAxisAlignment.center,
+              // Center the row content
               children: [
                 SizedBox(
                   width: 24,
@@ -40,7 +41,8 @@ class HomeView extends StatelessWidget {
                 const Expanded(
                   child: Text(
                     'Home',
-                    textAlign: TextAlign.center, // Center the text within Flexible
+                    textAlign:
+                        TextAlign.center, // Center the text within Flexible
                   ),
                 ),
                 const SizedBox(
@@ -219,25 +221,7 @@ class HomeView extends StatelessWidget {
   }
 
   Widget buildOrgsList() {
-    // Replace 'List<String>' with your actual data list of avatar URLs and names
-    final List<String> avatars = [
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-      // Add more avatar URLs as needed
-    ];
-    final List<String> names = [
-      'Name 1 iuhbiuh buyhyb',
-      'Name 2',
-      'Name 3',
-      'Name 4',
-      'Name 5',
-      'Name 6',
-      // Add more names as needed
-    ];
+    HomeController controller = Get.put(HomeController());
 
     return Column(
       children: [
@@ -267,39 +251,58 @@ class HomeView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20.0), // Adjust top margin below title
-        SizedBox(
-          height: 100.0, // Adjust height as needed
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: avatars.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                width: 72,
-                margin: EdgeInsets.only(
-                  left: index == 0 ? 24.0 : 0,
-                  right: index == 9 ? 24.0 : 16.0,
-                ),
-                child: Column(
-                  children: [
-                    // Avatar image in a circle
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(avatars[index]),
-                      radius: 36.0,
+        Obx(() => controller.isOrgsLoading.value
+            ? _buildLoadingIndicator()
+            : controller.orgs.isEmpty
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
+                      child: Text(
+                        "No organizations yet",
+                        style: TextStyle(
+                          color: WorkWiseColors.darkGreyColor,
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 8.0),
-                    // Adjust spacing between avatar and text
-                    // Text label below the avatar
-                    Text(
-                      overflow: TextOverflow.ellipsis,
-                      names[index],
-                      style: const TextStyle(fontSize: 13.0),
+                  )
+                : SizedBox(
+                    height: 140.0,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.orgs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          width: 100.0,
+                          margin: EdgeInsets.only(
+                            top: 16.0,
+                            bottom: 8.0,
+                            left: index == 0 ? 24.0 : 0,
+                            right: index == 9 ? 24.0 : 16.0,
+                          ),
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                radius: 40.0,
+                                backgroundImage: NetworkImage(
+                                  controller.orgs[index].image,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                controller.orgs[index].name,
+                                style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  color: WorkWiseColors.primaryColor,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
+                  )),
       ],
     );
   }
@@ -316,12 +319,12 @@ class HomeView extends StatelessWidget {
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 16.0),
-          Obx(() => controller.isFeaturedEventsLoading.value
+          Obx(() => controller.isYourEventsLoading.value
               ? _buildLoadingIndicator()
-              : controller.featuredEvents.isEmpty
+              : controller.yourEvents.isEmpty
                   ? const Center(
                       child: Text(
-                        "No recommended jobs found",
+                        "You don't have any events",
                         style: TextStyle(
                           color: WorkWiseColors.darkGreyColor,
                         ),
@@ -330,7 +333,7 @@ class HomeView extends StatelessWidget {
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.featuredEvents.length,
+                      itemCount: controller.yourEvents.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -338,9 +341,9 @@ class HomeView extends StatelessWidget {
                             shadowColor:
                                 WorkWiseColors.greyColor.withOpacity(0.5),
                             onCardTap: () => Get.toNamed("/job",
-                                arguments: CustomArg(
-                                    controller.featuredEvents[index].id)),
-                            eventPosting: controller.featuredEvents[index],
+                                arguments:
+                                    CustomArg(controller.yourEvents[index].id)),
+                            eventPosting: controller.yourEvents[index],
                           ),
                         );
                       },
@@ -379,7 +382,6 @@ class HomeView extends StatelessWidget {
     );
   }
 }
-
 
 class CustomArg {
   final String jobId;
