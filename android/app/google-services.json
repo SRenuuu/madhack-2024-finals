@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "819005780684",
+    "project_id": "volunify-app",
+    "storage_bucket": "volunify-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819005780684:android:b98a4b10b34092da268869",
+        "android_client_info": {
+          "package_name": "lk.ucsc.flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNOQ_ASordUG6FXR9_uXzd4mg-Lx9orbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

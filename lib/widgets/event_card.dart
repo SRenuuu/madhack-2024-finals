@@ -5,7 +5,6 @@ import 'package:flutter_app/widgets/job_tag.dart';
 import '../models/event_posting_model.dart';
 import 'flag.dart';
 
-
 class EventCard extends StatelessWidget {
   final VoidCallback onCardTap;
   final EventPosting eventPosting;
@@ -99,7 +98,7 @@ class EventCard extends StatelessWidget {
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.network(
-                                'https://foyr.com/learn/wp-content/uploads/2021/08/modern-office-design.png',
+                                eventPosting.image,
                                 fit: BoxFit.cover,
                               ),
                             )

@@ -5,7 +5,7 @@ class FirestoreService extends GetxService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<List<T>> getDocuments<T>(
-      Function fromJson,
+      Function fromDocument,
       String collectionName,
       Map<String, dynamic>? filter,
       Query Function(Query query)? orderBy,
@@ -23,19 +23,13 @@ class FirestoreService extends GetxService {
     }
 
     final querySnapshot = await query.get();
-    List<Object?> res = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-    print(res);
+    print(querySnapshot.docs);
 
-    // Manually convert each map to the desired type T
     List<T> convertedRes = [];
-    for (var item in res) {
-      print("====");
-      print(item);
-      convertedRes.add(fromJson(item));
+    for (var doc in querySnapshot.docs) {
+      convertedRes.add(fromDocument(doc));
     }
-
-    print(convertedRes);
 
     return convertedRes;
   }
