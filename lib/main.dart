@@ -13,10 +13,14 @@ import 'package:flutter_app/views/employer/job_listing_view.dart';
 import 'package:flutter_app/views/event_listing_view.dart';
 import 'package:flutter_app/views/home/home_view.dart';
 import 'package:flutter_app/views/home/search_filters_view.dart';
+import 'package:flutter_app/views/home/org_home_view.dart';
+import 'package:flutter_app/views/job_listing_view.dart';
 import 'package:flutter_app/views/job_posting/job_post_form_view.dart';
+import 'package:flutter_app/views/organizations/ManageApplicationHomePage.dart';
 import 'package:flutter_app/views/organizations/create_event.dart';
 import 'package:flutter_app/views/organizations/create_event_step_three.dart';
 import 'package:flutter_app/views/organizations/create_event_step_two.dart';
+import 'package:flutter_app/views/organizations/received_application.dart';
 import 'package:flutter_app/views/profile/about_me_view.dart';
 import 'package:flutter_app/views/profile/all_work_experience.dart';
 import 'package:flutter_app/views/profile/education_view.dart';
@@ -83,12 +87,16 @@ class MyApp extends StatelessWidget {
         '/employer-job': (context) => EmployerJobListingPage(),
 
         // Organizations Routes
+        '/organizer-home': (context) => const OrganizerHomeView(),
         '/create-event': (context) => const CreateEventStepOnePage(),
         '/create-event-step-2': (context) => const CreateEventStepTwoPage(),
         '/create-event-step-3': (context) => const CreateEventStepThreePage(),
 
         //    Chat routes
         '/chat' : (context) => ChatListPage(),
+        '/manage-application': (context) => const Manageapplicationhomepage(),
+        '/manage-application-received': (context) =>
+            const ReceivedApplication(),
       },
     );
   }

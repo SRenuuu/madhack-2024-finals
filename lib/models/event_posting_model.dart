@@ -14,7 +14,7 @@ class EventPosting {
   final DateTime deadline;
   final String registrationLink;
   final List<String> skills;
-  final String? tag;
+  final List<String>? tags;
   final bool? isFeatured;
   final int? appliedCount;
 
@@ -32,14 +32,15 @@ class EventPosting {
     required this.deadline,
     required this.registrationLink,
     required this.skills,
-    this.tag,
+    this.tags,
     this.isFeatured,
     this.appliedCount,
   });
 
   factory EventPosting.fromJson(Map<String, dynamic> json) {
+
     return EventPosting(
-      id: json['id'], // get this from doc.id
+      id: json['id'],
       name: json['name'],
       location: json['location'],
       description: json['description'],
@@ -52,13 +53,14 @@ class EventPosting {
       deadline: json['deadline'].toDate(),
       registrationLink: json['registration_link'],
       skills: List<String>.from(json['skills']),
-      tag: json['tag'],
+      tags: List<String>.from(json['tags']),
       isFeatured: json['is_featured'],
       appliedCount: json['applied_count'],
     );
   }
 
   static EventPosting fromDocument(QueryDocumentSnapshot doc) {
+    print(doc.data());
     final eventData = doc.data() as Map<String, dynamic>;
     eventData['id'] = doc.id;
     return EventPosting.fromJson(eventData);

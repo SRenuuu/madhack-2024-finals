@@ -1,17 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_app/controllers/home_controller.dart';
 import 'package:flutter_app/theme/colors.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/custom_drawer.dart';
-import '../../widgets/form_text_field.dart';
 import '../../widgets/event_card.dart';
+import '../../widgets/form_text_field.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key});
+class OrganizerHomeView extends StatelessWidget {
+  const OrganizerHomeView({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +26,8 @@ class HomeView extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // Center the row content
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Center the row content
               children: [
                 SizedBox(
                   width: 24,
@@ -60,6 +58,8 @@ class HomeView extends StatelessWidget {
               children: [
                 buildSearchField(context),
                 const SizedBox(height: 24.0),
+                // buildFeaturedEvents(),
+                // const SizedBox(height: 24.0),
                 buildFeaturedEvents(),
                 const SizedBox(height: 20.0),
                 buildOrgsList(),
@@ -71,6 +71,39 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildFeaturedEvents() {
+    HomeController controller = Get.put(HomeController());
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  buildApplicationCard(
+                    title: 'Projects Completed',
+                    count: '3',
+                  ),
+                  buildApplicationCard(
+                    title: 'Active Volunteer',
+                    count: '1',
+                  ),
+                  buildApplicationCard(
+                    title: 'Donation\'s Received',
+                    count: '\$6M+',
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -148,80 +181,65 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget buildFeaturedEvents() {
-    HomeController controller = Get.put(HomeController());
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  "Featured Events",
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
-                ),
-              ),
-              GestureDetector(
-                onTap: () => {print("View all events")},
-                child: const Text(
-                  "View all",
-                  style: TextStyle(
-                    color: WorkWiseColors.secondaryColor,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w400,
+  Widget buildApplicationCard({required String title, required String count}) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          if (title == 'Received') {
+            Get.toNamed('/manage-application-received');
+          }
+        },
+        child: Card(
+          elevation: 3,
+          margin: EdgeInsets.all(8),
+          child: Container(
+            color: WorkWiseColors.lightGreyColor,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    count,
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
-                ),
-              )
-            ],
+                  const SizedBox(height: 8),
+                  Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
-        Obx(() => controller.isOrgsLoading.value
-            ? _buildLoadingIndicator()
-            : controller.featuredEvents.isEmpty
-                ? const Center(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-                      child: Text(
-                        "No featured events yet",
-                        style: TextStyle(
-                          color: WorkWiseColors.darkGreyColor,
-                        ),
-                      ),
-                    ),
-                  )
-                : SizedBox(
-                    height: 265.0,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: controller.featuredEvents.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          margin: EdgeInsets.only(
-                            top: 16.0,
-                            bottom: 24.0,
-                            left: index == 0 ? 24.0 : 0,
-                            right: index == 9 ? 24.0 : 16.0,
-                          ),
-                          child: EventCard(
-                            showDescription: false,
-                            shadowColor:
-                                WorkWiseColors.greyColor.withOpacity(0.5),
-                            onCardTap: () => {print("Not implemented")},
-                            eventPosting: controller.featuredEvents[index],
-                          ),
-                        );
-                      },
-                    ),
-                  )),
-      ],
+      ),
     );
   }
 
   Widget buildOrgsList() {
-    HomeController controller = Get.put(HomeController());
+    // Replace 'List<String>' with your actual data list of avatar URLs and names
+    final List<String> avatars = [
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      // Add more avatar URLs as needed
+    ];
+    final List<String> names = [
+      'Name 1 iuhbiuh buyhyb',
+      'Name 2',
+      'Name 3',
+      'Name 4',
+      'Name 5',
+      'Name 6',
+      // Add more names as needed
+    ];
 
     return Column(
       children: [
@@ -251,58 +269,39 @@ class HomeView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20.0), // Adjust top margin below title
-        Obx(() => controller.isOrgsLoading.value
-            ? _buildLoadingIndicator()
-            : controller.orgs.isEmpty
-                ? const Center(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-                      child: Text(
-                        "No organizations yet",
-                        style: TextStyle(
-                          color: WorkWiseColors.darkGreyColor,
-                        ),
-                      ),
+        SizedBox(
+          height: 100.0, // Adjust height as needed
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: avatars.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                width: 72,
+                margin: EdgeInsets.only(
+                  left: index == 0 ? 24.0 : 0,
+                  right: index == 9 ? 24.0 : 16.0,
+                ),
+                child: Column(
+                  children: [
+                    // Avatar image in a circle
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(avatars[index]),
+                      radius: 36.0,
                     ),
-                  )
-                : SizedBox(
-                    height: 140.0,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: controller.orgs.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          width: 100.0,
-                          margin: EdgeInsets.only(
-                            top: 16.0,
-                            bottom: 8.0,
-                            left: index == 0 ? 24.0 : 0,
-                            right: index == 9 ? 24.0 : 16.0,
-                          ),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 40.0,
-                                backgroundImage: NetworkImage(
-                                  controller.orgs[index].image,
-                                ),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                controller.orgs[index].name,
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  color: WorkWiseColors.primaryColor,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                    const SizedBox(height: 8.0),
+                    // Adjust spacing between avatar and text
+                    // Text label below the avatar
+                    Text(
+                      overflow: TextOverflow.ellipsis,
+                      names[index],
+                      style: const TextStyle(fontSize: 13.0),
                     ),
-                  )),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -319,12 +318,12 @@ class HomeView extends StatelessWidget {
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 16.0),
-          Obx(() => controller.isYourEventsLoading.value
+          Obx(() => controller.isFeaturedEventsLoading.value
               ? _buildLoadingIndicator()
-              : controller.yourEvents.isEmpty
+              : controller.featuredEvents.isEmpty
                   ? const Center(
                       child: Text(
-                        "You don't have any events",
+                        "No recommended jobs found",
                         style: TextStyle(
                           color: WorkWiseColors.darkGreyColor,
                         ),
@@ -333,7 +332,7 @@ class HomeView extends StatelessWidget {
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.yourEvents.length,
+                      itemCount: controller.featuredEvents.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -341,9 +340,9 @@ class HomeView extends StatelessWidget {
                             shadowColor:
                                 WorkWiseColors.greyColor.withOpacity(0.5),
                             onCardTap: () => Get.toNamed("/job",
-                                arguments:
-                                    CustomArg(controller.yourEvents[index].id)),
-                            eventPosting: controller.yourEvents[index],
+                                arguments: CustomArg(
+                                    controller.featuredEvents[index].id)),
+                            eventPosting: controller.featuredEvents[index],
                           ),
                         );
                       },
