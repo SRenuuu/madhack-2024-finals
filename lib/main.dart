@@ -4,6 +4,7 @@ import 'package:flutter_app/services/auth_service.dart';
 import 'package:flutter_app/services/resume_upload_service.dart';
 import 'package:flutter_app/views/auth/login_view.dart';
 import 'package:flutter_app/views/auth/signup_view.dart';
+import 'package:flutter_app/views/chat/chat_contacts.dart';
 import 'package:flutter_app/views/employer/employer_signup_view.dart';
 import 'package:flutter_app/views/employer/home_view.dart';
 import 'package:flutter_app/views/employer/job_listing_view.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         title: 'WorkWise - Job Search',
         theme: AppTheme.getTheme(),
-        home: UserProfilePage(),
+        home: ChatListPage(),
         debugShowCheckedModeBanner: false,
         routes: {
           '/root': (context) => const RootView(),
@@ -72,6 +73,9 @@ class MyApp extends StatelessWidget {
         '/employer-home': (context) => const EmployerHomeView(),
         '/create-job': (context) => const JobPostFormView(),
         '/employer-job': (context) => EmployerJobListingPage(),
+
+      //    Chat routes
+          '/chat' : (context) => ChatListPage(),
       },
     );
   }
