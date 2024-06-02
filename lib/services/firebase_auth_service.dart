@@ -49,7 +49,7 @@ class FirebaseAuthService extends GetxService {
     return null;
   }
 
-  Future<UserData?> register(String email, String password) async {
+  Future<UserData?> register(String email, String password, String customRole) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -58,7 +58,7 @@ class FirebaseAuthService extends GetxService {
         // Create a UserProfile document in Firestore
         await _firestore.collection('users').doc(user.uid).set({
           'email': email,
-          'role': 'volunteer', // Default role, adjust as needed
+          'role': customRole, // Default role, adjust as needed
           // Add other fields as necessary
         });
 

@@ -8,6 +8,7 @@ import 'package:flutter_app/services/firestore_service.dart';
 import 'package:flutter_app/views/auth/login_view.dart';
 import 'package:flutter_app/views/auth/signup_view.dart';
 import 'package:flutter_app/views/chat/chat_contacts.dart';
+import 'package:flutter_app/views/employer/employer_signup_view.dart';
 import 'package:flutter_app/views/event_listing_view.dart';
 import 'package:flutter_app/views/home/home_view.dart';
 import 'package:flutter_app/views/home/search_filters_view.dart';
@@ -60,6 +61,8 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const UserProfilePage(),
         '/search-filters': (context) => const SearchFiltersView(),
         '/events': (context) => const EventsView(),
+
+        '/employer_sign_up': (context) => const EmployerSignUpView(),
 
         // Organizations Routes
         '/organizer-home': (context) => const OrganizerHomeView(),
