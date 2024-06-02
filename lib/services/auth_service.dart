@@ -68,6 +68,7 @@ class AuthService extends GetxService {
   }
 
   void forceLogout() {
+
     if (kDebugMode) {
       print("Logging out");
     }

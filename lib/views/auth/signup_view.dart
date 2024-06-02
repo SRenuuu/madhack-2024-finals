@@ -36,12 +36,17 @@ class SignUpView extends StatelessWidget {
                     const Text("Create an Account",
                         style: TextStyle(
                             fontSize: 24.0, fontWeight: FontWeight.w400)),
+                    const Text("Please create your account as a Volunteer",
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w400,
+                            color: WorkWiseColors.darkGreyColor)),
                     const SizedBox(height: 30.0),
                     // Name Field
                     TextField(
                       controller: controller.nameController,
                       decoration: const InputDecoration(
-                        labelText: 'Name',
+                        labelText: 'Volunteer Name',
                       ),
                     ),
                     const SizedBox(height: 24.0),
@@ -79,7 +84,7 @@ class SignUpView extends StatelessWidget {
                             print('Forgot Password button pressed');
                             Get.toNamed("/employer_sign_up");
                           },
-                          child: const Text('Are you an employer?',
+                          child: const Text('Are you an organizer?',
                               style: TextStyle(
                                   color: WorkWiseColors.primaryColor)),
                         ),
@@ -104,7 +109,7 @@ class SignUpView extends StatelessWidget {
                                         ),
                                         shouldIconPulse: true,
                                         "Success",
-                                        "Welcome to WorkWise",
+                                        "Your Volunify registration was successful! Please log in to continue.",
                                         colorText: Colors.white,
                                         backgroundColor: Colors.green.shade700
                                             .withOpacity(0.9),

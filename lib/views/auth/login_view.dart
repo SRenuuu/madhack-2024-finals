@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_data_model.dart';
 import 'package:get/get.dart';
 
+import '../../services/firebase_auth_service.dart';
 import '../../controllers/login_controller.dart';
 import '../../theme/colors.dart';
 
@@ -36,6 +38,12 @@ class LoginView extends StatelessWidget {
                     const Text("Welcome back!",
                         style: TextStyle(
                             fontSize: 24.0, fontWeight: FontWeight.w400)),
+                    const SizedBox(height: 4.0), // Spacer
+                    const Text("Please sign in to continue",
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400,
+                            color: WorkWiseColors.darkGreyColor)),
                     const SizedBox(height: 40.0),
                     // Email Field
                     TextField(
@@ -71,53 +79,70 @@ class LoginView extends StatelessWidget {
                     // Sign In Button
                     Obx(
                       () => ElevatedButton(
-                          onPressed: controller.isLoginLoading.value
-                              ? null
-                              : () {
-                                  FocusScope.of(context).unfocus();
-                                  controller.login().then((value) {
-                                    if (value) {
-                                      if (controller.authService
-                                              .getUserRole() ==
-                                          "employer") {
-                                        Get.offAllNamed("/employer-home");
-                                      } else if (controller.authService
-                                              .getUserRole() ==
-                                          "jobApplicant") {
-                                        Get.offAllNamed("/home");
-                                      } else {
-                                        Get.snackbar(
-                                          "Error",
-                                          "Invalid user role",
-                                          colorText: Colors.white,
-                                          backgroundColor: Colors.red.shade700
-                                              .withOpacity(0.9),
-                                        );
-                                      }
-                                      Get.snackbar(
-                                        icon: const Icon(
-                                          Icons.check_circle,
-                                          size: 26,
-                                          color: Colors.white,
-                                        ),
-                                        shouldIconPulse: true,
-                                        "Success",
-                                        "Welcome to WorkWise",
-                                        colorText: Colors.white,
-                                        backgroundColor: Colors.green.shade700
-                                            .withOpacity(0.9),
-                                      );
-                                    }
-                                  });
-                                },
-                          child: !controller.isLoginLoading.value
-                              ? const Text('Sign in')
-                              : const SizedBox(
-                                  height: 24.0,
-                                  width: 24.0,
-                                  child: CircularProgressIndicator(
-                                      strokeWidth: 2.0),
-                                )),
+                        onPressed: controller.isLoginLoading.value
+                            ? null // Disable the button if login is in progress
+                            : () async {
+                                // Make the function async to allow fetching user role
+                                FocusScope.of(context)
+                                    .unfocus(); // Dismiss keyboard
+                                UserData? loginResult = await controller
+                                    .login(); // Attempt to log in
+
+                                if (loginResult != null) {
+                                  String? userRole = loginResult.role;
+
+                                  if (userRole == "volunteer") {
+                                    Get.snackbar(
+                                      icon: const Icon(
+                                        Icons.check_circle,
+                                        size: 26,
+                                        color: Colors.white,
+                                      ),
+                                      shouldIconPulse: true,
+                                      "Success",
+                                      "Welcome back Volunteer!",
+                                      colorText: Colors.white,
+                                      backgroundColor: Colors.green.shade700
+                                          .withOpacity(0.9),
+                                    );
+                                    Get.offAllNamed("/home");
+                                  } else if (userRole == "organizer") {
+                                    Get.snackbar(
+                                      icon: const Icon(
+                                        Icons.check_circle,
+                                        size: 26,
+                                        color: Colors.white,
+                                      ),
+                                      shouldIconPulse: true,
+                                      "Success",
+                                      "Welcome back Organizer!",
+                                      colorText: Colors.white,
+                                      backgroundColor: Colors.green.shade700
+                                          .withOpacity(0.9),
+                                    );
+                                    Get.offAllNamed("/organizer-home");
+                                  } else {
+                                    Get.snackbar(
+                                      "Error",
+                                      "Invalid user role",
+                                      colorText: Colors.white,
+                                      backgroundColor:
+                                          Colors.red.shade700.withOpacity(0.9),
+                                    );
+                                  }
+                                }
+                              },
+                        child: !controller.isLoginLoading.value
+                            ? const Text(
+                                'Sign in') // Show 'Sign in' text when not loading
+                            : const SizedBox(
+                                height: 24.0,
+                                width: 24.0,
+                                child: CircularProgressIndicator(
+                                    strokeWidth:
+                                        2.0), // Show loading indicator when loading
+                              ),
+                      ),
                     ),
                     const SizedBox(height: 24.0), // Spacer
                     // Sign Up Button

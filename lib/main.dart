@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/firebase_auth_service.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_app/services/auth_service.dart';
 import 'package:flutter_app/services/firebase_service.dart';
@@ -24,6 +25,7 @@ import 'package:flutter_app/views/profile/skills_view.dart';
 import 'package:flutter_app/views/profile/work_experience_view.dart';
 import 'package:flutter_app/views/resume_upload_view.dart';
 import 'package:flutter_app/views/root_view.dart';
+import 'package:flutter_app/views/splash_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
@@ -43,6 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put<GetConnect>(GetConnect());
     Get.put(FirebaseService());
+    Get.put(FirebaseAuthService());
     Get.put(AuthService());
     Get.put(ApiService());
     Get.put(ResumeUploadService());
@@ -50,9 +53,9 @@ class MyApp extends StatelessWidget {
     Get.put(FirestoreService());
 
     return GetMaterialApp(
-      title: 'WorkWise - Job Search',
+      title: 'Volunify',
       theme: AppTheme.getTheme(),
-      home: const CreateEventStepOnePage(),
+      home: const SplashView(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/root': (context) => const RootView(),

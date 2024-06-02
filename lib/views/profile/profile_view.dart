@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/controllers/login_controller.dart';
 import 'package:flutter_app/controllers/profile_controller.dart';
 import 'package:flutter_app/theme/colors.dart';
 import 'package:flutter_app/views/profile/education_view.dart';
@@ -13,7 +14,7 @@ class UserProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProfileController profileController = Get.put(ProfileController());
+    LoginController loginController = Get.put(LoginController());
 
     List<ProfileSection> profileSections = [
       ProfileSection(
@@ -68,7 +69,7 @@ class UserProfilePage extends StatelessWidget {
                     title: "Logout",
                     icon: CupertinoIcons.square_arrow_right,
                     onTap: () {
-                      profileController.authService.forceLogout();
+                      loginController.logout();
                     },
                     showArrow: false,
                   )
@@ -113,7 +114,7 @@ class UserProfilePage extends StatelessWidget {
                   const CircleAvatar(
                     radius: 60.0,
                     backgroundImage: NetworkImage(
-                      "https://foyr.com/learn/wp-content/uploads/2021/08/modern-office-design.png", // Replace with user's profile image
+                      "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png", // Replace with user's profile image
                     ),
                     backgroundColor: Colors
                         .transparent, // Set background color to transparent

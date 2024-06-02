@@ -1,17 +1,22 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/firebase_auth_service.dart';
 import 'package:get/get.dart';
 
 import '../models/login_request.dart';
 import '../models/login_response.dart';
+import '../models/user_data_model.dart';
 import '../services/api_service.dart';
 import '../services/auth_service.dart';
 import '../util/constants.dart';
 
 class LoginController extends GetxController {
   final ApiService apiService = Get.find<ApiService>();
-  final authService = Get.find<AuthService>();
+
+  FirebaseAuthService authService = Get.put(FirebaseAuthService());
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final RxBool isLoginLoading = false.obs;
@@ -23,8 +28,7 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  Future<bool> login() async {
-    // check if all fields are filled
+  Future<UserData?> login() async {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       Get.snackbar(
         'Error',
@@ -32,66 +36,18 @@ class LoginController extends GetxController {
         backgroundColor: Colors.orange.shade800.withOpacity(0.9),
         colorText: Colors.white,
       );
-      return false;
+      return null;
     }
 
     isLoginLoading.value = true;
-
-    LoginRequest loginRequest = LoginRequest(
-        email: emailController.text, password: passwordController.text);
-    try {
-      final response = await apiService.sendPostRequest(
-        false, // authentication is not required for login
-        Constants.loginEndpoint,
-        data: loginRequest.toJson(),
-      );
-
-      isLoginLoading.value = false;
-
-      if (response == null) {
-        return false;
-      }
-
-      if (response.statusCode == HttpStatus.badRequest) {
-        Get.snackbar(
-          'Validation failed',
-          'Please check your email and password',
-          colorText: Colors.white,
-          backgroundColor: Colors.orange.shade800.withOpacity(0.9),
-        );
-      }
-
-      if (response.statusCode == HttpStatus.notFound ||
-          response.statusCode == HttpStatus.forbidden) {
-        Get.snackbar(
-          'Error',
-          'Invalid email or password',
-          colorText: Colors.white,
-          backgroundColor: Colors.red.shade700.withOpacity(0.9),
-        );
-      }
-
-      if (response.statusCode != HttpStatus.ok) {
-        return false;
-      }
-
-      LoginResponse loginResponse = LoginResponse.fromJson(response.body);
-
-      final authService = Get.find<AuthService>();
-
-      authService.setUserEmail(loginResponse.data.email);
-      authService.setAuthentication(true);
-      authService.setBearerToken(loginResponse.data.token);
-      authService.setUserId(loginResponse.data.id);
-      authService.setUserRole(loginResponse.data.role);
-
-      emailController.text = "";
-      passwordController.text = "";
-      return true;
-    } catch (e) {
-      return false;
-    }
+    return await authService.signIn(emailController.text, passwordController.text);
   }
+
+  // implement logout
+  Future<void> logout() async {
+    await authService.signOut();
+  }
+
 
   @override
   void onClose() {
