@@ -5,11 +5,8 @@ import 'package:flutter_app/services/firebase_auth_service.dart';
 import 'package:get/get.dart';
 
 import '../models/user_data_model.dart';
-import '../services/api_service.dart';
 
 class LoginController extends GetxController {
-  final ApiService apiService = Get.find<ApiService>();
-
   FirebaseAuthService authService = Get.put(FirebaseAuthService());
 
   final TextEditingController emailController = TextEditingController();

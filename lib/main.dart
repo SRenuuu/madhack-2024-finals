@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_app/services/auth_service.dart';
 import 'package:flutter_app/services/firebase_auth_service.dart';
 import 'package:flutter_app/services/firebase_service.dart';
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
     Get.put(FirebaseService());
     Get.put(FirebaseAuthService());
     Get.put(AuthService());
-    Get.put(ApiService());
 
     Get.put(FirestoreService());
 

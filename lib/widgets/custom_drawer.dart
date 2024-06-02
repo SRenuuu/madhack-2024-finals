@@ -91,7 +91,7 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Volunteers'),
               onTap: () {
                 // Handle volunteers navigation
-                Get.offAllNamed('/create-event');
+                Get.toNamed('/create-event');
                 controller.handleDrawerToggle();
               },
             ),

@@ -1,6 +1,5 @@
 class Constants {
   // API related data
-  static const String baseUrl = "http://40.121.158.182:4000/api/";
 
   // Endpoints
   static const String loginEndpoint = "auth/signin";
