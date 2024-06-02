@@ -28,9 +28,9 @@ class HomeController extends GetxController {
     try {
       final featuredEventsData =
           await firestoreService.getDocuments<EventPosting>(
-        EventPosting.fromJson,
+        EventPosting.fromDocument,
         'events',
-        {},
+        null,
         (query) => query.orderBy('start_date',
             descending: true), // Specify ordering if needed
       );

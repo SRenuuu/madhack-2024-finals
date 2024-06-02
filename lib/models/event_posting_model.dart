@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventPosting {
+  final String id;
   final String name;
   final String location;
   final String description;
@@ -18,6 +19,7 @@ class EventPosting {
   final int? appliedCount;
 
   EventPosting({
+    required this.id,
     required this.name,
     required this.location,
     required this.description,
@@ -37,13 +39,14 @@ class EventPosting {
 
   factory EventPosting.fromJson(Map<String, dynamic> json) {
     return EventPosting(
+      id: json['id'], // get this from doc.id
       name: json['name'],
       location: json['location'],
       description: json['description'],
       notes: json['notes'],
       startDate: json['start_date'].toDate(),
       endDate: json['end_date'].toDate(),
-      image: "",
+      image: json['image'],
       organizerPhone: json['organizer_phone'],
       organizerEmail: json['organizer_email'],
       deadline: json['deadline'].toDate(),
@@ -56,6 +59,8 @@ class EventPosting {
   }
 
   static EventPosting fromDocument(QueryDocumentSnapshot doc) {
-    return EventPosting.fromJson(doc.data() as Map<String, dynamic>);
+    final eventData = doc.data() as Map<String, dynamic>;
+    eventData['id'] = doc.id;
+    return EventPosting.fromJson(eventData);
   }
 }
