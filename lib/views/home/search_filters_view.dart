@@ -267,7 +267,7 @@ class SearchFiltersView extends StatelessWidget {
                       child: Icon(
                         imageCategories[index].icon, // Cast to IconData if it's an icon
                         size: 36.0, // Adjust size as needed
-                        color: Colors.red,
+                        color: WorkWiseColors.primaryColor,
 
                       ),
                     ),

@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'WorkWise - Job Search',
       theme: AppTheme.getTheme(),
-      home: const CreateEventStepOnePage(),
+      home: const HomeView(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/root': (context) => const RootView(),
