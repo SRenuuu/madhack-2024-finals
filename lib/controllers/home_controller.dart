@@ -93,4 +93,52 @@ class HomeController extends GetxController {
   void handleDrawerToggle() {
     drawerController.toggleDrawer();
   }
+
+  final RxList<String> skills = [
+    'Communication',
+    'Time Management',
+    'Adaptability',
+    'Problem Solving',
+    'Teamwork',
+    'Compassion',
+    'Friendliness',
+    'Enthusiasm',
+  ].obs;
+
+  final RxList<String> selectedSkills = <String>[].obs;
+
+  final List<String> timeCommitments = [
+    '6-12 Months',
+    'Less than 3 months',
+    '3-6 months',
+    'More then 12 months'
+  ];
+  final RxList<String> selectedTimeCommitments = <String>[].obs;
+
+  void addSkillTag(String tag) {
+    selectedSkills.add(tag);
+  }
+
+  void removeSkillTag(String tag) {
+    selectedSkills.remove(tag);
+  }
+
+  void addTimeCommitmentTag(String tag) {
+    selectedTimeCommitments.add(tag);
+  }
+
+  void removeTimeCommitmentTag(String tag) {
+    selectedTimeCommitments.remove(tag);
+  }
+
+  final TextEditingController filterLocationController =
+  TextEditingController();
+
+}
+
+class ImageCategory {
+  final IconData icon;
+  final String categoryName;
+
+  const ImageCategory({required this.icon, required this.categoryName});
 }
