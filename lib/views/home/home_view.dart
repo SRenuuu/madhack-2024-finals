@@ -1,97 +1,112 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_app/controllers/home_controller.dart';
 import 'package:flutter_app/theme/colors.dart';
 import 'package:get/get.dart';
 
+import '../../widgets/custom_drawer.dart';
 import '../../widgets/form_text_field.dart';
-import '../../widgets/job_card.dart';
+import '../../widgets/event_card.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildSearchField(context),
-              const SizedBox(height: 24.0),
-              buildMostPopularJobs(),
-              buildJobTagsList(context),
-              const SizedBox(height: 20.0),
-              buildRecommendedJobs(context),
-              const SizedBox(height: 40.0),
-            ],
+    // final drawerController = AdvancedDrawerController();
+    final HomeController controller = Get.put(HomeController());
+
+    return AdvancedDrawer(
+      controller: controller.drawerController,
+      drawer: CustomDrawer(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          toolbarHeight: 60.0,
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Center the row content
+              children: [
+                SizedBox(
+                  width: 24,
+                  child: GestureDetector(
+                    child: const Icon(Icons.menu),
+                    onTap: controller.handleDrawerToggle,
+                  ),
+                ),
+                const Expanded(
+                  child: Text(
+                    'Home',
+                    textAlign: TextAlign.center, // Center the text within Flexible
+                  ),
+                ),
+                const SizedBox(
+                  width: 24,
+                  child: null,
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildSearchField(context),
+                const SizedBox(height: 24.0),
+                buildFeaturedEvents(),
+                const SizedBox(height: 20.0),
+                buildOrgsList(),
+                const SizedBox(height: 20.0),
+                buildYourEvents(context),
+                const SizedBox(height: 40.0),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  AppBar buildAppBar() {
-    HomeController controller = Get.put(HomeController());
-    return AppBar(
-      backgroundColor: Colors.white,
-      toolbarHeight: 80.0,
-      title: buildAppBarTitle(),
-    );
-  }
-
-  Widget buildAppBarTitle() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(
-            'assets/images/workwise-logo-long.png',
-            width: 180.0,
-          ),
-          buildProfileIcons(),
-        ],
-      ),
-    );
-  }
-
-  Widget buildProfileIcons() {
-    return Row(
-      children: [
-        IconButton(
-          onPressed: () => Get.toNamed("/saved-jobs"),
-          icon: const Icon(
-            Icons.bookmarks_rounded,
-            size: 24,
-            color: WorkWiseColors.tertiaryColor,
-          ),
-        ),
-        const SizedBox(width: 12.0),
-        buildProfileIconButton(),
-      ],
-    );
-  }
-
-  Widget buildProfileIconButton() {
-    return Container(
-      width: 42.0,
-      height: 42.0,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: WorkWiseColors.lightGreyColor,
-      ),
-      child: IconButton(
-        onPressed: () => Get.toNamed("/profile"),
-        icon: const Icon(
-          Icons.person,
-          size: 24,
-          color: WorkWiseColors.primaryColor,
-        ),
-      ),
-    );
-  }
+  // Widget buildProfileIcons() {
+  //   return Row(
+  //     children: [
+  //       IconButton(
+  //         onPressed: () => Get.toNamed("/saved-jobs"),
+  //         icon: const Icon(
+  //           Icons.bookmarks_rounded,
+  //           size: 24,
+  //           color: WorkWiseColors.tertiaryColor,
+  //         ),
+  //       ),
+  //       const SizedBox(width: 12.0),
+  //       buildProfileIconButton(),
+  //     ],
+  //   );
+  // }
+  //
+  // Widget buildProfileIconButton() {
+  //   return Container(
+  //     width: 42.0,
+  //     height: 42.0,
+  //     decoration: const BoxDecoration(
+  //       shape: BoxShape.circle,
+  //       color: WorkWiseColors.lightGreyColor,
+  //     ),
+  //     child: IconButton(
+  //       onPressed: () => Get.toNamed("/profile"),
+  //       icon: const Icon(
+  //         Icons.person,
+  //         size: 24,
+  //         color: WorkWiseColors.primaryColor,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget buildSearchField(context) {
     HomeController controller = Get.put(HomeController());
@@ -103,9 +118,9 @@ class HomeView extends StatelessWidget {
             child: formTextField(
               showBorder: true,
               isDense: true,
-              hintText: 'Search Jobs...',
+              hintText: 'Search Events...',
               showLabel: false,
-              label: 'Search Jobs',
+              label: 'Search Events',
               prefixIcon: const Icon(Icons.search,
                   size: 26.0, color: WorkWiseColors.primaryColor),
               controller: controller.searchController,
@@ -121,7 +136,7 @@ class HomeView extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
               child: IconButton(
                 onPressed: () => {Get.toNamed("/search-filters")},
-                icon: const Icon(Icons.list,
+                icon: const Icon(Icons.filter_list_sharp,
                     size: 28.0, color: WorkWiseColors.darkGreyColor),
               ),
             ),
@@ -131,26 +146,43 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget buildMostPopularJobs() {
+  Widget buildFeaturedEvents() {
     HomeController controller = Get.put(HomeController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-            "Most popular",
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "Featured Events",
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => {print("View all events")},
+                child: const Text(
+                  "View all",
+                  style: TextStyle(
+                    color: WorkWiseColors.secondaryColor,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              )
+            ],
           ),
         ),
-        Obx(() => controller.isMostPopularJobPostsLoading.value
+        Obx(() => controller.isOrgsLoading.value
             ? _buildLoadingIndicator()
-            : controller.mostPopularJobPosts.isEmpty
+            : controller.featuredEvents.isEmpty
                 ? const Center(
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                      padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
                       child: Text(
-                        "No popular jobs found",
+                        "No featured events yet",
                         style: TextStyle(
                           color: WorkWiseColors.darkGreyColor,
                         ),
@@ -158,10 +190,10 @@ class HomeView extends StatelessWidget {
                     ),
                   )
                 : SizedBox(
-                    height: 204.0,
+                    height: 265.0,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: controller.mostPopularJobPosts.length,
+                      itemCount: controller.featuredEvents.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           width: MediaQuery.of(context).size.width * 0.8,
@@ -171,65 +203,108 @@ class HomeView extends StatelessWidget {
                             left: index == 0 ? 24.0 : 0,
                             right: index == 9 ? 24.0 : 16.0,
                           ),
-                          child: JobCard(
+                          child: EventCard(
                             showDescription: false,
                             shadowColor:
                                 WorkWiseColors.greyColor.withOpacity(0.5),
                             onCardTap: () => {print("Not implemented")},
-                            jobPosting: controller.mostPopularJobPosts[index],
+                            eventPosting: controller.featuredEvents[index],
                           ),
-              );
-            },
-          ),
-        )),
+                        );
+                      },
+                    ),
+                  )),
       ],
     );
   }
 
-  Widget buildJobTagsList(context) {
-    HomeController controller = Get.put(HomeController());
-    return Row(
+  Widget buildOrgsList() {
+    // Replace 'List<String>' with your actual data list of avatar URLs and names
+    final List<String> avatars = [
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      'https://via.placeholder.com/150',
+      // Add more avatar URLs as needed
+    ];
+    final List<String> names = [
+      'Name 1 iuhbiuh buyhyb',
+      'Name 2',
+      'Name 3',
+      'Name 4',
+      'Name 5',
+      'Name 6',
+      // Add more names as needed
+    ];
+
+    return Column(
       children: [
-        Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Obx(
-              () => Container(
-                // Specify a maximum width for the Row widget
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  children: [
-                    const SizedBox(width: 16),
-                    ...controller.jobTagsList.map(
-                      (job) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: InputChip(
-                          onPressed: () => print("Job: $job"),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 8.0),
-                          label: Text(job),
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(color: Colors.transparent),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          backgroundColor:
-                              WorkWiseColors.greyColor.withOpacity(0.5),
-                          labelStyle: const TextStyle(fontSize: 15.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                  ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          // Adjust title padding
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "Organizations",
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
                 ),
               ),
-            ),
+              GestureDetector(
+                onTap: () => {print("View all events")},
+                child: const Text(
+                  "View all",
+                  style: TextStyle(
+                    color: WorkWiseColors.secondaryColor,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(height: 20.0), // Adjust top margin below title
+        SizedBox(
+          height: 100.0, // Adjust height as needed
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: avatars.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                width: 72,
+                margin: EdgeInsets.only(
+                  left: index == 0 ? 24.0 : 0,
+                  right: index == 9 ? 24.0 : 16.0,
+                ),
+                child: Column(
+                  children: [
+                    // Avatar image in a circle
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(avatars[index]),
+                      radius: 36.0,
+                    ),
+                    const SizedBox(height: 8.0),
+                    // Adjust spacing between avatar and text
+                    // Text label below the avatar
+                    Text(
+                      overflow: TextOverflow.ellipsis,
+                      names[index],
+                      style: const TextStyle(fontSize: 13.0),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       ],
     );
   }
 
-  Widget buildRecommendedJobs(context) {
+  Widget buildYourEvents(context) {
     HomeController controller = Get.put(HomeController());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -237,13 +312,13 @@ class HomeView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Recommended for you",
+            "Your Events",
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 16.0),
-          Obx(() => controller.isRecommendedJobPostsLoading.value
+          Obx(() => controller.isFeaturedEventsLoading.value
               ? _buildLoadingIndicator()
-              : controller.recommendedJobPosts.isEmpty
+              : controller.featuredEvents.isEmpty
                   ? const Center(
                       child: Text(
                         "No recommended jobs found",
@@ -255,21 +330,21 @@ class HomeView extends StatelessWidget {
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.recommendedJobPosts.length,
+                      itemCount: controller.featuredEvents.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: JobCard(
+                          child: EventCard(
                             shadowColor:
                                 WorkWiseColors.greyColor.withOpacity(0.5),
                             onCardTap: () => Get.toNamed("/job",
                                 arguments: CustomArg(
-                                    controller.recommendedJobPosts[index].id)),
-                            jobPosting: controller.recommendedJobPosts[index],
+                                    controller.featuredEvents[index].id)),
+                            eventPosting: controller.featuredEvents[index],
                           ),
                         );
                       },
-          )),
+                    )),
         ],
       ),
     );
@@ -304,6 +379,7 @@ class HomeView extends StatelessWidget {
     );
   }
 }
+
 
 class CustomArg {
   final String jobId;
