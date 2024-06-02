@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../models/signup_request.dart';
+import '../../models/user_data_model.dart';
 import '../../services/api_service.dart';
-import '../../util/constants.dart';
+import '../../services/firebase_auth_service.dart';
 
 class EmployerSignUpController extends GetxController {
   final ApiService apiService = Get.find<ApiService>();
@@ -53,54 +51,22 @@ class EmployerSignUpController extends GetxController {
 
     isRegisterLoading.value = true;
 
-    SignUpRequest signUpRequest = SignUpRequest(
-        name: nameController.text,
-        email: emailController.text,
-        password: passwordController.text,
-        confirmPassword: confirmPasswordController.text,
-        role: "employer");
-
     try {
-      final response = await apiService.sendPostRequest(
-        false, // authentication is not required for login
-        Constants.registerEndpoint,
-        data: signUpRequest.toJson(),
-      );
+      isRegisterLoading.value = true;
+      UserData? userData = await Get.find<FirebaseAuthService>()
+          .register(emailController.text, passwordController.text, 'organizer');
 
-      isRegisterLoading.value = false;
+      print(userData);
 
-      if (response == null) {
+      if (userData != null) {
+        return true;
+      } else {
+        nameController.text = "";
+        emailController.text = "";
+        passwordController.text = "";
+        confirmPasswordController.text = "";
         return false;
       }
-
-      if (response.statusCode == HttpStatus.badRequest) {
-        Get.snackbar(
-          'Validation failed',
-          'Please check your email and password',
-          colorText: Colors.white,
-          backgroundColor: Colors.orange.shade800.withOpacity(0.9),
-        );
-      }
-
-      if (response.statusCode == HttpStatus.notFound ||
-          response.statusCode == HttpStatus.forbidden) {
-        Get.snackbar(
-          'Error',
-          'Invalid email or password',
-          colorText: Colors.white,
-          backgroundColor: Colors.red.shade700.withOpacity(0.9),
-        );
-      }
-
-      if (response.statusCode != HttpStatus.ok) {
-        return false;
-      }
-
-      nameController.text = "";
-      emailController.text = "";
-      passwordController.text = "";
-      confirmPasswordController.text = "";
-      return true;
     } catch (e) {
       return false;
     }

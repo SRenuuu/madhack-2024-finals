@@ -37,7 +37,7 @@ class EmployerSignUpView extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 24.0, fontWeight: FontWeight.w500)),
                     const SizedBox(height: 8.0), // Spacer
-                    const Text("For Employer",
+                    const Text("For Organizations",
                         style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w500,
@@ -85,7 +85,7 @@ class EmployerSignUpView extends StatelessWidget {
                             print('Forgot Password button pressed');
                             Get.toNamed("/sign_up");
                           },
-                          child: const Text('Are you an employee?',
+                          child: const Text('Are you a volunteer?',
                               style: TextStyle(
                                   color: WorkWiseColors.primaryColor)),
                         ),

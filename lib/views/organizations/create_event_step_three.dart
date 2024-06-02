@@ -192,7 +192,7 @@ class _CreateEventStepThreePageState extends State<CreateEventStepThreePage> {
                   colorText: Colors.white,
                   backgroundColor: Colors.green.shade800.withOpacity(0.9),
                 );
-                // TODO: Add navigation to the next page
+                Get.toNamed('/organizer-home');
               } else {
                 Get.snackbar(
                   'Error',

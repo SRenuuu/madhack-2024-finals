@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../models/signup_request.dart';
 import '../models/user_data_model.dart';
 import '../services/api_service.dart';
-import '../util/constants.dart';
 import '../services/firebase_auth_service.dart';
 
 class SignUpController extends GetxController {
@@ -57,10 +53,8 @@ class SignUpController extends GetxController {
 
     try {
       isRegisterLoading.value = true;
-      UserData? userData = await Get.find<FirebaseAuthService>().register(
-        emailController.text,
-        passwordController.text,
-      );
+      UserData? userData = await Get.find<FirebaseAuthService>()
+          .register(emailController.text, passwordController.text, 'volunteer');
 
       if (userData != null) {
         return true;

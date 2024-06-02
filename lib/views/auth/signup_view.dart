@@ -84,7 +84,7 @@ class SignUpView extends StatelessWidget {
                             print('Forgot Password button pressed');
                             Get.toNamed("/employer_sign_up");
                           },
-                          child: const Text('Are you an organizer?',
+                          child: const Text('Are you an organization?',
                               style: TextStyle(
                                   color: WorkWiseColors.primaryColor)),
                         ),
