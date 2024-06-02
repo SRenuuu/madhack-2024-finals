@@ -7,9 +7,12 @@ import 'package:flutter_app/services/firestore_service.dart';
 import 'package:flutter_app/services/resume_upload_service.dart';
 import 'package:flutter_app/views/auth/login_view.dart';
 import 'package:flutter_app/views/auth/signup_view.dart';
+import 'package:flutter_app/views/chat/chat_contacts.dart';
 import 'package:flutter_app/views/employer/employer_signup_view.dart';
 import 'package:flutter_app/views/employer/job_listing_view.dart';
+import 'package:flutter_app/views/event_listing_view.dart';
 import 'package:flutter_app/views/home/home_view.dart';
+import 'package:flutter_app/views/home/search_filters_view.dart';
 import 'package:flutter_app/views/home/org_home_view.dart';
 import 'package:flutter_app/views/job_listing_view.dart';
 import 'package:flutter_app/views/job_posting/job_post_form_view.dart';
@@ -55,16 +58,16 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'WorkWise - Job Search',
       theme: AppTheme.getTheme(),
-      home: const OrganizerHomeView(),
+      home: const HomeView(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/root': (context) => const RootView(),
         '/login': (context) => const LoginView(),
         '/sign_up': (context) => const SignUpView(),
         '/home': (context) => const HomeView(),
-        '/job': (context) => JobListingPage(),
+        '/job': (context) => EventListingView(),
         '/profile': (context) => const UserProfilePage(),
-        // '/search-filters': (context) => const SearchFiltersView(),
+        '/search-filters': (context) => const SearchFiltersView(),
         '/user-profile': (context) => const UserPersonalDetailPage(),
         '/user-experience': (context) => const WorkExperiencePage(),
         '/resume': (context) => const ResumeUploadView(),
@@ -88,6 +91,9 @@ class MyApp extends StatelessWidget {
         '/create-event': (context) => const CreateEventStepOnePage(),
         '/create-event-step-2': (context) => const CreateEventStepTwoPage(),
         '/create-event-step-3': (context) => const CreateEventStepThreePage(),
+
+        //    Chat routes
+        '/chat' : (context) => ChatListPage(),
         '/manage-application': (context) => const Manageapplicationhomepage(),
         '/manage-application-received': (context) =>
             const ReceivedApplication(),
