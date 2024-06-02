@@ -13,11 +13,8 @@ class SkillsPage extends StatelessWidget {
     SkillsController controller = Get.put(SkillsController());
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Skills'),
-      ),
       body: Obx(
-          () => Padding(
+        () => Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
@@ -34,10 +31,12 @@ class SkillsPage extends StatelessWidget {
                 alignment: WrapAlignment.center,
                 spacing: 8.0,
                 runSpacing: 4.0,
-                children: controller.skills.map((skill) => _SkillChip(
-                  skill: skill,
-                  onRemove: () => controller.removeSkill(skill),
-                )).toList(),
+                children: controller.skills
+                    .map((skill) => _SkillChip(
+                          skill: skill,
+                          onRemove: () => controller.removeSkill(skill),
+                        ))
+                    .toList(),
               ),
             ],
           ),
@@ -56,12 +55,12 @@ class _SkillChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Chip(
-      label: Text(skill),
-      deleteIcon: const Icon(Icons.close), // Use Icon directly for simplicity
-      onDeleted: onRemove, // Set onDeleted property for delete functionality
-      backgroundColor: Colors.grey[200],
-      shape: const RoundedRectangleBorder(side: BorderSide(color: Colors.transparent),
-          borderRadius: BorderRadius.all(Radius.circular(10)))
-    );
+        label: Text(skill),
+        deleteIcon: const Icon(Icons.close), // Use Icon directly for simplicity
+        onDeleted: onRemove, // Set onDeleted property for delete functionality
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+            side: BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.all(Radius.circular(10))));
   }
 }
